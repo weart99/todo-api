@@ -1,0 +1,27 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.Python
+*.so
+
+# Test and coverage files
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Database files
+*.db
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# MacOS files
+.DS_Store
