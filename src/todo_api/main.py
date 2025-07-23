@@ -1,4 +1,7 @@
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from .schemas import TaskCreate, TaskUpdate, TaskResponse
 from .models import TaskStatus, Task
@@ -6,8 +9,19 @@ from .database import get_db, create_tables
 
 app: FastAPI = FastAPI(title="Todo API", version="0.1.0")
 
+# Mount static files and templates
+app.mount("/static", StaticFiles(directory="src/todo_api/static"), name="static")
+templates: Jinja2Templates = Jinja2Templates(directory="src/todo_api/templates")
+
 # Initialize the database and create tables
 create_tables()
+
+
+@app.get("/", response_class=HTMLResponse)
+async def read_root(request: Request):
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "title": "To Do App"}
+    )
 
 
 @app.get("/tasks/", response_model=list[TaskResponse])

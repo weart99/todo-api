@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 {{ title }}</h1>
+
+        <!-- Formulaire d'ajout de tâche -->
+        <div class="add-task-form">
+            <h2>Ajouter une nouvelle tâche</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="title">Titre :</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description :</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Statut :</label>
+                    <select id="status" name="status">
+                        <option value="To do">À faire</option>
+                        <option value="Doing">En cours</option>
+                        <option value="Done">Terminé</option>
+                        <option value="Cancelled">Annulé</option>
+                    </select>
+                </div>
+
+                <button type="submit">Ajouter la tâche</button>
+            </form>
+        </div>
+
+        <!-- Liste des tâches -->
+        <div class="tasks-container">
+            <h2>Mes tâches</h2>
+            <div id="tasksList">
+                <!-- Les tâches seront ajoutées ici via JavaScript -->
+                <div class="task-item">
+                    <div class="task-content">
+                        <p>Chargement des tâches...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
