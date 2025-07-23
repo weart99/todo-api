@@ -19,6 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest-cov>=6.2.1",
+    "ruff>=0.12.4",
 ]
 
 [tool.pytest.ini_options]
@@ -28,4 +29,5 @@ testpaths = ["tests"]
 [dependency-groups]
 dev = [
     "pytest-cov>=6.2.1",
+    "ruff>=0.12.4",
 ]
