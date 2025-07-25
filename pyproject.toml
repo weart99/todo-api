@@ -16,6 +16,12 @@ dependencies = [
     "uvicorn>=0.35.0",
 ]
 
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=6.2.1",
+    "ruff>=0.12.4",
+]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
@@ -23,4 +29,5 @@ testpaths = ["tests"]
 [dependency-groups]
 dev = [
     "pytest-cov>=6.2.1",
+    "ruff>=0.12.4",
 ]
