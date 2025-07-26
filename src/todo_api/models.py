@@ -1,6 +1,6 @@
 from enum import Enum
-from sqlalchemy import String, DateTime, Integer, Enum as SQLAlchemyEnum
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import String, DateTime, Integer, Enum as SQLAlchemyEnum, ForeignKey
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from datetime import datetime, timezone
 
 
@@ -33,15 +33,7 @@ class Task(Base):
         onupdate=lambda: datetime.now(timezone.utc),
     )
 
-    # def __init__(
-    #     self, title: str, description: str, status: TaskStatus = TaskStatus.TODO
-    # ):
-    #     self.title = title
-    #     self.description = description
-    #     self.status = status
-    #     self.created_at = datetime.now(timezone.utc)
-    #     self.updated_at = datetime.now(timezone.utc)
-
-    # def update_status(self, new_status: TaskStatus):
-    #     self.status = new_status
-    #     self.updated_at = datetime.now(timezone.utc)
+    # Foreign key to the user who owns the task
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    # Relationship to the user
+    owner = relationship("User", back_populates="tasks")
