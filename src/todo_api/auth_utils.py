@@ -2,6 +2,11 @@ from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 import secrets
+from fastapi import HTTPException, status, Depends
+from fastapi.security import HTTPBearer
+from sqlalchemy.orm import Session
+from .database import get_db
+from .auth_models import User
 
 
 # Configuration for password hashing
@@ -40,3 +45,27 @@ def verify_access_token(token: str) -> str | None:
         return username
     except JWTError:
         return None
+
+
+# Security dependency to extract the token from the request
+security: HTTPBearer = HTTPBearer()
+
+
+def get_current_user(token=Depends(security), db: Session = Depends(get_db)) -> User:
+    """Get the current user from the token."""
+    username = verify_access_token(token.credentials)
+
+    if username is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid authentication credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    user = db.query(User).filter(User.username == username).first()
+    if user is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    return user
