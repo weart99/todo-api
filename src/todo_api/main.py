@@ -4,7 +4,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
 from .schemas import TaskCreate, TaskUpdate, TaskResponse
-from .models import TaskStatus, Task
+from .models import Task
 from .database import get_db, create_tables
 from .auth_routes import auth_router
 from .auth_utils import get_current_user

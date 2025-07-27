@@ -28,8 +28,3 @@ class UserResponse(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
-
-
-# Token data schema
-class TokenData(BaseModel):
-    username: str | None = None
