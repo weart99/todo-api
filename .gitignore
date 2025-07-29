@@ -25,3 +25,9 @@ venv/
 
 # MacOS files
 .DS_Store
+
+# Ruff files
+.ruff_cache/
+
+# IDEs and editors
+.vscode/

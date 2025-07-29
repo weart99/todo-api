@@ -34,3 +34,38 @@ def client():
     # Drop the database tables after tests
     Base.metadata.drop_all(bind=engine)
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def test_user_data(client):
+    """Test user data for authentication."""
+    return {
+        "username": "testuser",
+        "email": "testuser@example.com",
+        "password": "testpassword123",
+    }
+
+
+@pytest.fixture
+def created_user(client, test_user_data):
+    """Create a user with API"""
+    response = client.post("/auth/register", json=test_user_data)
+    return response.json()
+
+
+@pytest.fixture
+def auth_token(client, test_user_data, created_user):
+    """Valid authentication token"""
+    # Log in to get the token
+    login_data = {
+        "username": test_user_data["username"],
+        "password": test_user_data["password"],
+    }
+    response = client.post("/auth/login", json=login_data)
+    return response.json()["access_token"]
+
+
+@pytest.fixture
+def auth_headers(auth_token):
+    """Headers with authentication token"""
+    return {"Authorization": f"Bearer {auth_token}"}
